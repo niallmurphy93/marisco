@@ -153,6 +153,6 @@ def match_maris_lut(
 
     # Sort the DataFrame by score and select the top nresults
     df = df.sort_values(by='score', ascending=True)[:nresults]
-
+    return df
     # Select the id and name columns and return the DataFrame
     return df[[maris_id, maris_name, 'score']]
