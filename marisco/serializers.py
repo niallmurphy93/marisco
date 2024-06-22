@@ -51,6 +51,9 @@ def process_groups(self:NetCDFEncoder):
 @patch
 def process_group(self:NetCDFEncoder, group_name, df):
     group_dest = self.dest.createGroup(group_name)
+    # Set the dimensions for each group
+    group_dest.createDimension(group_name, len(df.index))
+    
     self.copy_variables(group_name, df, group_dest)
 
 # %% ../nbs/api/serializers.ipynb 11
@@ -77,7 +80,7 @@ def copy_variable(self:NetCDFEncoder, var_name, var_src, df, group_dest):
 @patch
 def _create_and_copy_variable(self:NetCDFEncoder, var_name, var_src, df, group_dest, dtype_name):
     variable_type = self.enum_types.get(dtype_name, var_src.datatype)
-    group_dest.createVariable(var_name, variable_type, var_src.dimensions, compression='zlib', complevel=9)
+    group_dest.createVariable(var_name, variable_type, group_dest.dimensions, compression='zlib', complevel=9)
        
     isNotEnum = type(variable_type) != netCDF4._netCDF4.EnumType
     values = df[var_name].values
