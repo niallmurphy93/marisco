@@ -26,9 +26,9 @@ class Transformer():
     def __init__(self, dfs, cbs=None): 
         self.cbs = cbs
         #self.dfs = {k: v.copy() for k, v in dfs.items()}
-
         self.dfs = self._copy(dfs)
-        
+        self.attrs = None
+        self.xtra = {}  # Initialize the xtra attribute as an empty dictionary
         self.logs = []
 
     def _copy(self, dfs):
